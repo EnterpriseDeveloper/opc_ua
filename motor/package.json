@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx server.ts",
-    "watch": "tsx watch server.ts",
+    "dev": "tsx ./src/server.ts",
+    "watch": "tsx watch ./src/server.ts",
     "build": "tsc"
   },
   "keywords": [],

@@ -6,9 +6,9 @@ import {
     SecurityPolicy
 } from "node-opcua";
 
-import { ElectricityMeter } from "./src/ElectricityMeter";
-import { createElectricityNamespace } from "./src/namespace";
-import { startSimulation } from "./src/simulation";
+import { ElectricityMeter } from "./ElectricityMeter";
+import { createElectricityNamespace } from "./namespace";
+import { startSimulation } from "./simulation";
 
 async function main() {
 

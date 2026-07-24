@@ -1,0 +1,84 @@
+version: "3.9"
+
+services:
+
+  motor:
+
+    build:
+      context: ./motor
+
+    container_name: plc-motor
+
+    hostname: plc-motor
+
+    restart: unless-stopped
+
+    ports:
+      - "4841:4840"
+
+    environment:
+      OPCUA_PORT: 4840
+      RESOURCE_PATH: /motor
+
+    volumes:
+      - ./motor/certs:/app/certs
+
+    networks:
+      - factory
+
+
+  pump:
+
+    build:
+      context: ./pump
+
+    container_name: plc-pump
+
+    hostname: plc-pump
+
+    restart: unless-stopped
+
+    ports:
+      - "4842:4840"
+
+    environment:
+      OPCUA_PORT: 4840
+      RESOURCE_PATH: /pump
+
+    volumes:
+      - ./pump/certs:/app/certs
+
+    networks:
+      - factory
+
+
+  electricity:
+
+    build:
+      context: ./electricity
+
+    container_name: plc-electricity
+
+    hostname: plc-electricity
+
+    restart: unless-stopped
+
+    ports:
+      - "4843:4840"
+
+    environment:
+      OPCUA_PORT: 4840
+      RESOURCE_PATH: /electricity
+
+    volumes:
+      - ./electricity/certs:/app/certs
+
+    networks:
+      - factory
+
+
+networks:
+
+  factory:
+
+    driver: bridge

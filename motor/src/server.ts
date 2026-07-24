@@ -6,9 +6,9 @@ import {
     SecurityPolicy
 } from "node-opcua";
 
-import { Motor } from "./src/motor";
-import { createMotorNamespace } from "./src/namespace";
-import { startSimulation } from "./src/simulation";
+import { Motor } from "./motor";
+import { createMotorNamespace } from "./namespace";
+import { startSimulation } from "./simulation";
 
 async function main() {
 
