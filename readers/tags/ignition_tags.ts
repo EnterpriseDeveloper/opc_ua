@@ -10,6 +10,12 @@ export interface TagValue {
     value: string;
 }
 
+export interface PlcTagGroup {
+    name: string;
+    nodeId: string;
+    tags: TagValue[];
+}
+
 interface VariableNode {
     nodeId: NodeId;
     path: string;
@@ -89,7 +95,7 @@ export async function readPlcTags(
     session: ClientSession,
     tagProvider: string,
     plcName: string
-): Promise<TagValue[]> {
+): Promise<PlcTagGroup> {
     const tagProviders = await findChild(session, "ObjectsFolder", "Tag Providers");
     const provider = await findChild(session, tagProviders.nodeId, tagProvider);
     const plc = await findChild(session, provider.nodeId, plcName);
@@ -99,16 +105,19 @@ export async function readPlcTags(
         `Tag Providers/${tagProvider}/${plcName}`,
         new Set<string>([plc.nodeId.toString()])
     );
-    if (variables.length === 0) return [];
+    if (variables.length === 0) {
+        return { name: plcName, nodeId: plc.nodeId.toString(), tags: [] };
+    }
 
     const values = await session.read(variables.map((variable) => ({
         nodeId: variable.nodeId,
         attributeId: AttributeIds.Value
     })));
-    return values.map((dataValue, index) => ({
+    const tags = values.map((dataValue, index) => ({
         nodeId: variables[index].nodeId.toString(),
         path: variables[index].path,
         status: dataValue.statusCode.toString(),
         value: formatValue(dataValue.value.value)
     }));
+    return { name: plcName, nodeId: plc.nodeId.toString(), tags };
 }
