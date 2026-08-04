@@ -1,7 +1,8 @@
 import {
     OPCUAClient,
     MessageSecurityMode,
-    SecurityPolicy
+    SecurityPolicy,
+    AttributeIds
 } from "node-opcua-client";
 
 import { OPCUACertificateManager } from "node-opcua-certificate-manager";
@@ -32,16 +33,46 @@ const client = OPCUAClient.create({
 
     console.log("Connected");
 
-    const session = await client.createSession();
+        const session = await client.createSession();
 
     console.log("Session created");
 
-    const browseResult = await session.browse("RootFolder");
+    const root = await session.browse("RootFolder");
 
-    console.log(browseResult.references);
+    for (const ref of root.references ?? []) {
+    console.log(
+        ref.browseName.toString(),
+        ref.nodeId.toString()
+    );
+}
 
-    await session.close();
-    await client.disconnect();
+const devices = await session.browse("ns=1;i=85");
+
+console.log(devices);
+
+const devices2 = await session.browse("ns=1;i=86");
+
+console.log(devices2);
+
+const devices3 = await session.browse("ns=1;i=87");
+
+console.log(devices3);
+
+const devices4 = await session.browse("ns=1;s=Devices");
+
+console.log(devices4);
+
+
+
+//     const dataValue = await session.read({
+//     nodeId: "ns=1;i=1011",
+//     attributeId: AttributeIds.Value
+// });
+
+// console.log(dataValue.value.value);
+
+
+
 }
 
 main();
