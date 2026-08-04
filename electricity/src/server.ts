@@ -24,8 +24,11 @@ async function main() {
 
     const server = new OPCUAServer({
 
-        port: Number(process.env.OPCUA_PORT ?? 4840),
 
+        port: 4843,
+        alternateHostname: "192.168.0.100",
+        certificateFile: "./certs/PLC_Electricity.crt",
+        privateKeyFile: "./certs/PLC_Electricity.pem",
         resourcePath: process.env.RESOURCE_PATH ?? "/electricity",
 
         buildInfo: {
@@ -40,22 +43,18 @@ async function main() {
 
         serverInfo: {
 
+            applicationUri: "urn://betme/plc/electricity",
             applicationName: {
-                text: "Electricity OPC UA Server"
-            }
+                text: "Electricity OPC UA Server",
+                locale: "en"
+            },
+            productUri: "urn://betme/plc/electricity"
 
         },
-
-        allowAnonymous: true,
-
         securityPolicies: [
-            SecurityPolicy.None,
             SecurityPolicy.Basic256Sha256
         ],
-
         securityModes: [
-            MessageSecurityMode.None,
-            MessageSecurityMode.Sign,
             MessageSecurityMode.SignAndEncrypt
         ]
 

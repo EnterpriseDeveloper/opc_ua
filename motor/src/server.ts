@@ -24,9 +24,11 @@ async function main() {
 
     const server = new OPCUAServer({
 
-        port: 4840,
-
+        port: 4841,
+        alternateHostname: "localhost",
         resourcePath: "/motor",
+        certificateFile: "./certs/PLC_Motor.crt",
+        privateKeyFile: "./certs/PLC_Motor.pem",
 
         buildInfo: {
 
@@ -39,23 +41,21 @@ async function main() {
         },
 
         serverInfo: {
-
+            applicationUri: "urn://betme/plc/motor",
             applicationName: {
-                text: "Motor OPC UA Server"
-            }
+                text: "Motor OPC UA Server",
+                locale: "en"
+            },
+            productUri: "urn://betme/plc/motor"
+
 
         },
 
-        allowAnonymous: true,
-
         securityPolicies: [
-            SecurityPolicy.None,
             SecurityPolicy.Basic256Sha256
         ],
 
         securityModes: [
-            MessageSecurityMode.None,
-            MessageSecurityMode.Sign,
             MessageSecurityMode.SignAndEncrypt
         ]
 
@@ -66,6 +66,9 @@ async function main() {
     //----------------------------------------------------------
 
     await server.initialize();
+
+    console.log("HERE")
+    console.log(server.serverInfo);
 
     //----------------------------------------------------------
     // Create Address Space

@@ -14,10 +14,10 @@ services:
     restart: unless-stopped
 
     ports:
-      - "4841:4840"
+      - "4841:4841"
 
     environment:
-      OPCUA_PORT: 4840
+      OPCUA_PORT: 4841
       RESOURCE_PATH: /motor
 
     volumes:
@@ -39,10 +39,10 @@ services:
     restart: unless-stopped
 
     ports:
-      - "4842:4840"
+      - "4842:4842"
 
     environment:
-      OPCUA_PORT: 4840
+      OPCUA_PORT: 4842
       RESOURCE_PATH: /pump
 
     volumes:
@@ -64,10 +64,10 @@ services:
     restart: unless-stopped
 
     ports:
-      - "4843:4840"
+      - "4843:4843"
 
     environment:
-      OPCUA_PORT: 4840
+      OPCUA_PORT: 4843
       RESOURCE_PATH: /electricity
 
     volumes:

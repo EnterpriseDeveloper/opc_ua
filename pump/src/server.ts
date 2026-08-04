@@ -24,7 +24,10 @@ async function main(): Promise<void> {
 
     const server = new OPCUAServer({
 
-        port: Number(process.env.OPCUA_PORT ?? 4840),
+        port: 4842,
+        alternateHostname: "192.168.0.100",
+        certificateFile: "./certs/PLC_Pump.crt",
+        privateKeyFile: "./certs/PLC_Pump.pem",
 
         resourcePath: process.env.RESOURCE_PATH ?? "/pump",
 
@@ -40,22 +43,18 @@ async function main(): Promise<void> {
 
         serverInfo: {
 
+            applicationUri: "urn://betme/plc/pump",
             applicationName: {
-                text: "Pump OPC UA Server"
-            }
+                text: "Pump OPC UA Server",
+                locale: "en"
+            },
+            productUri: "urn://betme/plc/pump"
 
         },
-
-        allowAnonymous: true,
-
         securityPolicies: [
-            SecurityPolicy.None,
             SecurityPolicy.Basic256Sha256
         ],
-
         securityModes: [
-            MessageSecurityMode.None,
-            MessageSecurityMode.Sign,
             MessageSecurityMode.SignAndEncrypt
         ]
 

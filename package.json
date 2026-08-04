@@ -7,16 +7,17 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node opc_server.js",
+    "start": "npx ts-node opc_server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "node-opcua": "^2.175.2",
+    "node-opcua-certificate-manager": "^2.175.6",
     "node-opcua-client": "^2.175.2"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "^7.0.2"
+    "typescript": "^5.9.2"
   }
 }

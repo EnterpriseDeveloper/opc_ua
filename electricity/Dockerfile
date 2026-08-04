@@ -34,6 +34,6 @@ COPY --from=builder /app/dist ./dist
 
 COPY certs ./certs
 
-EXPOSE 4840
+EXPOSE 4843
 
 CMD ["node", "dist/server.js"]
